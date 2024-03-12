@@ -6,8 +6,8 @@ function createGrid(scene) {
     let Color4 = BABYLON.Color4;
     let Vector3 = BABYLON.Vector3;
      
-    let m = 50;
-    let r = 5;
+    let m = 1000;
+    let r = 100;
     let pts = [];
     let colors = [];
     let c1 = new Color4(0.7,0.7,0.7,0.5);

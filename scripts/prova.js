@@ -12,9 +12,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
     
     scene = new BABYLON.Scene(engine);
     camera = new BABYLON.ArcRotateCamera('cam', 
-            -Math.PI/2, 1,
+            -Math.PI/2, 1.5,
             3.2, 
-            new BABYLON.Vector3(0,0.2,2), 
+            new BABYLON.Vector3(0,1.4,2.3), 
             scene);
     camera.attachControl(canvas,true);
     camera.wheelPrecision = 50;
@@ -37,6 +37,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     
     let raggioRuota = 0.56;
 
+    scene.clearColor = new BABYLON.Color3(60/255, 139/255, 199/255);
 
     
     //roba provvisoria per vedere se funzionano gli eventi dei tasti

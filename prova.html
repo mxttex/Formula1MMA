@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en">
+<html lang="it">
     <head>
-        <title>Title</title>
+        <title>CircuitoProva</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
@@ -16,6 +16,8 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
+
+        <link rel="stylesheet" href="styles/prova.css">
     </head>
 
     <body>
@@ -23,7 +25,7 @@
             <!-- place navbar here -->
         </header>
         <main>
-            <a href="prova.html">pagina prova</a>
+            <canvas id="renderCanvas"  touch-action="none"></canvas>
         </main>
         <footer>
             <!-- place footer here -->
@@ -40,5 +42,12 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+
+        <script src="https://preview.babylonjs.com/babylon.js"></script>
+        <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+        <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+
+        <script src="scripts/prova.js"></script>
+        <script src="scripts/common.js"></script>
     </body>
 </html>
