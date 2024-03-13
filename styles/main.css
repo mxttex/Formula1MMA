@@ -48,6 +48,8 @@ h1{
     text-align: center;
     font-size: 48px;
     color: red;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: white;
 }
 
 #rules{
@@ -63,5 +65,11 @@ h1{
     
 }
 
+label{
+    font-size: 25px;
+    color: black;
+    -webkit-text-stroke-width: 0.25px;
+    -webkit-text-stroke-color: white;
+}
 
 
