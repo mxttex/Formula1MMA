@@ -1,0 +1,54 @@
+<<<<<<< HEAD
+=======
+@font-face {
+    font-family: Formula1Font;
+    src: url(../objects/Formula1-Regular-1.ttf);
+}
+
+html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    
+}
+
+#renderCanvas {
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    align-items: center;
+    /* border-radius: 10px;
+    border: black solid 3px;
+    box-shadow: 5px 5px 5px gray; */
+
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 5%;
+    margin-top: 10px;
+    vertical-align: center;
+}
+
+div{
+    font-family: Formula1Font;
+}
+
+#rules{
+    margin-top: 1%;
+    margin-left: 5px;
+}
+
+.carousel-inner > .carousel-item > canvas
+{
+    min-width: 100%;
+    min-height: 100%;
+    background-size: cover;
+    background-position: center center;
+}
+
+
+
+>>>>>>> d782dd91aa05254594290a2700e6fc1f85b1b4fc
