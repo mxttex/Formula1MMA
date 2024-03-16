@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="it">
     <head>
-        <title>Scelta Auto</title>
+        <title>CircuitoProva</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
@@ -29,13 +29,28 @@
             <div id="carouselExampleFade" class="carousel slide carousel-fade" >
                 <div class="carousel-inner" >
                   <div class="carousel-item active"  >
-                    <canvas class="menu" id="renderFirstCar"   ></canvas>
+                    <canvas id="renderFirstCar"   class="car"></canvas>
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5 >Choose your car</h5>
+                      <p>Tipo 1</p>
+                      <Button>choose</Button>
+                    </div>
                   </div>
                   <div class="carousel-item active">
-                    <canvas class="menu" id="renderSecondCar" ></canvas>
+                    <canvas id="renderSecondCar" class="car"></canvas>
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Choose your car</h5>
+                      <p>Tipo 2</p>
+                      <Button>choose</Button>
+                    </div>
                   </div>
                   <div class="carousel-item active">
-                    <canvas class="menu" id="renderThirdCar"  ></canvas>
+                    <canvas id="renderThirdCar" class="car" ></canvas>
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Choose your car</h5>
+                      <p>Tipo 3</p>
+                      <Button>choose</Button>
+                    </div>
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -49,7 +64,7 @@
               </div>
         </main>
         <footer>
-            
+            <!-- place footer here -->
         </footer>
         <!-- Bootstrap JavaScript Libraries -->
         <script
@@ -68,11 +83,10 @@
         <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
         <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="menu.js"></script>
         <script src="../scripts/render/renderCar1.js"></script>
         <script src="../scripts/render/renderCar2.js"></script>
         <script src="../scripts/render/renderCar3.js"></script>
+        <script src="../scripts/render/renderCars.js"></script>
         <script src="../scripts/common.js"></script>
         
     </body>

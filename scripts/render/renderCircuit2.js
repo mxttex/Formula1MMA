@@ -1,7 +1,7 @@
 let canvas1, engine1, camera1, obj1;
 let scene1;
 
-window.addEventListener('DOMContentLoaded', (event) => {
+function renderCircuit2(){
 	
     canvas1 = document.getElementById("renderSecondCircuit"); // Get the canvas1 element
     engine1 = new BABYLON.Engine(canvas1, true); // Generate the BABYLON 3D engine1
@@ -19,6 +19,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
     camera1.lowerRadiusLimit = 5;
     camera1.attachControl(canvas1, true);
 
+    camera1.useAutoRotationBehavior=true;
+    camera1.useAutoRotationBehavior.idleRotationSpeed= 0.05;
+    camera1.useAutoRotationBehavior.idleRotationSpinupTime = 4000;
+    camera1.useAutoRotationBehavior.idleRotationWaitTime = 4000;
+
     light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene1);
     light1.intensity = 0.5;
     light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 0, -4), scene1);   
@@ -28,18 +33,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     
     
     BABYLON.SceneLoader.Append("./", "../objects/macchina.obj", scene1, function (scene1) {
-        createGrid(scene1);
-        var ruote = [];
-        ruote.push(scene1.meshes[13]);
-        ruote.push(scene1.meshes[14]);
-       
-
-      
-       
-        scene1.registerBeforeRender(() => {
-            let t = performance.now() * 0.001;
-          
-        })
+     
 
 
     });
@@ -47,4 +41,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
 	engine1.runRenderLoop(() => scene1.render());
 
     window.addEventListener("resize", function () { engine1.resize();});
-});
+}
