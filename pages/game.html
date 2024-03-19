@@ -16,13 +16,80 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
+        <link rel="stylesheet" href="../styles/game.css">
     </head>
 
     <body>
         <header>
             <!-- place navbar here -->
         </header>
-        <main></main>
+        <main>
+            <div class="container-fluid justify-content-center">
+                <div class="row">
+                    <div class="col-1 "></div>
+                    <div class="col-10 justify-content-center" id="title">GAME</div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row d-flex justify-content-center" >
+                    <div class="col-1 "></div>
+                    <div class="col-10">
+                        <canvas id="gameCanvas"></canvas>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <button id="rulesButton" type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalId">RULES</button>
+                </div>
+                
+
+            </div>
+            
+            <!-- Button trigger modal -->
+            
+            <!-- Modal -->
+            <div
+                class="modal fade"
+                id="modalId"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="modalTitleId"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalTitleId">REGOLE</h5>
+                            
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    COMANDI:
+                                </div>
+                                <div class="row">-w per accelerare</div>
+                                <div class="row">-s per frenare</div>
+                                <div class="row">-a per muoversi verso sinistra</div>
+                                <div class="row">-d per muoversi verso destra</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                
+            </script>
+            
+        </main>
         <footer>
             <!-- place footer here -->
         </footer>
@@ -38,5 +105,15 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        
+        <script src="https://preview.babylonjs.com/babylon.js"></script>
+        <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+        <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+
+        <script src="../scripts/render/game.js"></script>
+        <script src="../scripts/gamePage.js"></script>
+        <script src="../scripts/common.js"></script>
     </body>
 </html>
