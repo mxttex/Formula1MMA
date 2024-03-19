@@ -109,12 +109,12 @@ $(document).ready()
 
         let stringaInput = $("#inputNome").val();
         if(stringaInput.length > 0){
-            window.open("../pages/carchoice.html")
-            console.log($("#inputNome").val().length)
-            localStorage.setItem('name', stringaInput)
+            location.href ="../pages/carchoice.html";
+            console.log($("#inputNome").val().length);
+            localStorage.setItem('name', stringaInput);
         }
         else{
-            alert("Inserire il nome del giocatore")
+            alert("Inserire il nome del giocatore");
         }
     })
 }
