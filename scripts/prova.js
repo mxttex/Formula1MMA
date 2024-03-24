@@ -135,6 +135,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     const macchina = new Macchina();
     camera.parent = macchina.perno;
+    
+    
+    // metodo per registrare le posizioni per poi creare il fantasma
+    function registerPositions(){
+        let positions= [];
+        let position= new BABYLON.Vector3(macchina.position.x,macchina.position.y,macchina.position.z);
+        positions.push(position);
+    }
+    function createGhostCar(positions){
+        let ghostCar= new Macchina();
+        ghostCar.perno.position= positions[0];
+    }
+
 
     function populateScene(){
         createGrid(scene);
@@ -146,7 +159,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         matGomme.diffuseColor.set(0.2,0.5,0.7);
         matRaggi.diffuseColor.set(0.7,0.5,0.1);
         matMozzi.diffuseColor.set(0.3,0.4,0.7);
-    
+        
 
         let tasti = {};
 
@@ -163,10 +176,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
         })
 
         let speed = 0.0;
-
+        createGhostCar();
         scene.registerBeforeRender(() =>
         {
             macchina.advance(speed);
+            registerPositions();
 
             if(tasti['a'])
                 macchina.perno.rotation.y -= 0.02;

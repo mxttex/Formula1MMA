@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     
     //roba provvisoria per vedere se funzionano gli eventi dei tasti
-    function creaRuota() {
+    function creaRuota(MGomma, MMozzo, MRaggio) {
 
         // let perno = new BABYLON.TransformNode('ruota', scene);
     
@@ -56,7 +56,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             diameter:0.2,
             height:0.15,
         }, scene);
-        mozzo.material = matMozzi;
+        mozzo.material = MMozzo;
     
         // gomma
         let gomma = BABYLON.MeshBuilder.CreateTorus('car', {
@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             thickness:semiSpessoreGomma*2,
             tessellation:80
         }, scene);
-        gomma.material = matGomme;
+        gomma.material = MGomma;
         gomma.parent = mozzo;
     
         // raggi
@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             diameter:0.05,
             height:diameter,
         }, scene);
-        raggio.material = matRaggi;
+        raggio.material = MRaggio;
         raggio.rotation.z = Math.PI/2;
         raggio.parent = mozzo;
         for(let i=1; i<m; i++) {
@@ -106,7 +106,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             // creo le ruote
             let ruote = this.ruote = [];
             for(let i=0;i<4;i++) {
-                let ruota = creaRuota();
+                let ruota = creaRuota(matGomme,matMozzi,matRaggi);
                 ruota.parent = perno;
                 ruote.push(ruota);        
             }
@@ -133,10 +133,88 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.ruotaRuote(this.distanza_percorsa)
         }
     }
+//mod
+class Ghost {
+    
+    constructor()  {
+        // uso un perno per permettermi di sistemare facilmente 
+        // la macchina sul pavimento.
+        // se metto il perno sull'origine allora la macchina
+        // appare appoggiata al piano xz
+        let perno = this.perno = new BABYLON.TransformNode('ghost', scene);
 
+        let box = BABYLON.MeshBuilder.CreateBox('car', {}, scene);
+        box.material = matGhost;
+        box.parent = perno;
+        box.scaling.set(0.5,0.6,2)
+        box.position.y = 0.6;
+
+        // creo le ruote
+        let ruote = this.ruote = [];
+        for(let i=0;i<4;i++) {
+            let ruota = creaRuota(matGommeGhost,matMozziGhost,matRaggiGhost);
+            ruota.parent = perno;
+            ruote.push(ruota);        
+        }
+        // posiziono le ruote
+        let dx = 0.32, dy = raggioRuota, dz = 0.6;
+        ruote[0].position.set(dx,dy,dz);
+        ruote[1].position.set(-dx,dy,dz);
+        ruote[2].position.set(dx,dy,-dz);
+        ruote[3].position.set(-dx,dy,-dz);
+        this.distanza_percorsa = 0;
+    }
+
+    ruotaRuote(theta) {
+        this.ruote.forEach(ruota => {
+            ruota.rotation.x = theta / raggioRuota;
+        })
+
+    }
+    
+    registerCarMovements(speed){
+        let position= new BABYLON.Vector3(macchina.perno.position.x,macchina.perno.position.y,macchina.perno.position.z);
+        positions.push(position);
+        let rotation = macchina.perno.rotation.y
+        rotations.push(rotation);
+        speedValuesList.push(speed);
+        
+    }
+    // to execute only at the beginning
+    createGhostCar(){
+      ghostCar.perno.position.x=0;
+      ghostCar.perno.position.y=0;
+      ghostCar.perno.position.z=0;
+       
+    }
+    
+    advanceGhost(positions,i,rotations,speedValuesList){
+        ghostCar.perno.position= positions[i];
+        ghostCar.perno.rotation.y= rotations[i];
+        ghostCar.distanza_percorsa+=speedValuesList[i]
+        ghostCar.ruotaRuote(ghostCar.distanza_percorsa);
+    }
+   
+}
+    
+    
+    //fine mod
     const macchina = new Macchina();
     camera.parent = macchina.perno;
+    
+    // ghost script
+   
+    let positions= [];
+    let rotations= [];
+    let speedValuesList= [];
+    const ghostCar= new Ghost();
+    
+    //registerCarMovements();
+    ghostCar.createGhostCar(positions);
 
+    
+// end of the ghost script
+   
     function populateScene(){
         createGrid(scene);
         matMacchina = new BABYLON.StandardMaterial('mat-macchina', scene);
@@ -147,8 +225,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
         matGomme.diffuseColor.set(0.2,0.5,0.7);
         matRaggi.diffuseColor.set(0.7,0.5,0.1);
         matMozzi.diffuseColor.set(0.3,0.4,0.7);
-    
+        
+        
+        //ghost script 
+        //materials
+        matGhost= new BABYLON.StandardMaterial('mat-ghost',scene);
+        matGommeGhost    = new BABYLON.StandardMaterial('mat-gomme', scene);
+        matRaggiGhost    = new BABYLON.StandardMaterial('mat-raggi', scene);
+        matMozziGhost    = new BABYLON.StandardMaterial('mat-Mozzi', scene);
 
+        //colors
+        matGhost.diffuseColor.set(1,0.5,0.3);
+        matGommeGhost.diffuseColor.set(0.2,0.5,0.7);
+        matRaggiGhost.diffuseColor.set(0.7,0.5,0.1);
+        matMozziGhost.diffuseColor.set(0.3,0.4,0.7);
+
+        //trasparency
+        matGhost.alpha=0.5;
+        matGommeGhost.alpha=0.5;
+        matMozziGhost.alpha=0.5;
+        matRaggiGhost.alpha=0.5;
+
+        //end of ghost script
         let tasti = {};
 
         scene.onKeyboardObservable.add((kbInfo) => {
@@ -164,10 +262,30 @@ window.addEventListener('DOMContentLoaded', (event) => {
         })
 
         let speed = 0.0;
+       let t=0.0;
+       let i=0;
+
+       let traguardo = new BABYLON.Vector3(0,0,0);
 
         scene.registerBeforeRender(() =>
         {
+           t+=0.01;
             macchina.advance(speed);
+            // positions storing
+            ghostCar.registerCarMovements(speed);
+            //ghost movement
+
+        //prova nel caso non avessimo un traguardo 
+        //     if(t>5){
+        //    ghostCar.advanceGhost(positions,i,rotations,speedValuesList);
+        //     i++;
+        //     }
+
+        //dobbiamo prendere la mesh del circuito
+        if(ghostCar.perno.position==traguardo){
+            ghostCar.advanceGhost(positions,i,rotations,speedValuesList);
+             i++;
+             }
 
             if(tasti['a'])
                 macchina.perno.rotation.y -= 0.02;
@@ -180,12 +298,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 } else if(tasti['s']) {
                     // freno, cioè diminuisco la velocità (fino ad un minimo
                     // di 0)
-                    speed = Math.max(0.0, speed - 0.001);
+                    speed = Math.max(-0.1, speed - 0.001);
                 } else {
                     // se non faccio nulla la macchina rallenta da sola
-                    speed = Math.max(0.0, speed - 0.0001);
+                    if(speed>=0){
+                        speed = Math.max(0.0, speed - 0.0001);
+                        }else {
+                            speed = Math.min(0.0,speed + 0.0001)
+                        }
                 }
         })
     }
     
 });
+
+
+  
