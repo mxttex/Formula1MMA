@@ -14,7 +14,7 @@ function renderCircuit1(){
     camera = new BABYLON.ArcRotateCamera("Camera", 
         Math.PI/2, 
         Math.PI/3, 
-        100, new BABYLON.Vector3(0,0,0), scene);
+        50, new BABYLON.Vector3(0,0,0), scene);
     camera.wheelPrecision = 40;
     camera.lowerRadiusLimit = 5;
     camera.attachControl(canvas, true);
@@ -32,7 +32,7 @@ function renderCircuit1(){
         
     
     
-    BABYLON.SceneLoader.Append("./", "../objects/macchina.obj", scene, function (scene) {
+    BABYLON.SceneLoader.Append("./", "../objects/circuito/circuito.obj", scene, function (scene) {
   
       
       

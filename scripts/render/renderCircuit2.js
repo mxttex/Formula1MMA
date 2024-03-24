@@ -14,7 +14,7 @@ function renderCircuit2(){
     camera1 = new BABYLON.ArcRotateCamera("Camera1", 
         Math.PI/2, 
         Math.PI/3, 
-        100, new BABYLON.Vector3(0,0,0), scene1);
+        50, new BABYLON.Vector3(0,0,0), scene1);
     camera1.wheelPrecision = 40;
     camera1.lowerRadiusLimit = 5;
     camera1.attachControl(canvas1, true);
