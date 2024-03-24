@@ -30,8 +30,7 @@ function renderCar1(){
     light2.parent = camera;
    
 
-    BABYLON.SceneLoader.Append("./", "../objects/macchina.obj", scene, function (scene) {
-        
+    BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {
         var ruote = [];
         // ruote.push(scene.meshes[7]);
         // ruote.push(scene.meshes[8]);

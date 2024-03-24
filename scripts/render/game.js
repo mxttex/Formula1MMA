@@ -180,10 +180,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 } else if(tasti['s']) {
                     // freno, cioè diminuisco la velocità (fino ad un minimo
                     // di 0)
-                    speed = Math.max(0.0, speed - 0.001);
+                    speed = Math.max(-0.1, speed - 0.001);
                 } else {
                     // se non faccio nulla la macchina rallenta da sola
-                    speed = Math.max(0.0, speed - 0.0001);
+                    if(speed>=0){
+                        speed = Math.max(0.0, speed - 0.0001);
+                        }else {
+                            speed = Math.min(0.0,speed + 0.0001)
+                        }
                 }
         })
     }
