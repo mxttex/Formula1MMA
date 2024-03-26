@@ -176,7 +176,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         })
 
         let speed = 0.0;
-        createGhostCar();
+        createGhostCar()
         scene.registerBeforeRender(() =>
         {
             macchina.advance(speed);

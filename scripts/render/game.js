@@ -13,10 +13,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     
     scene = new BABYLON.Scene(engine);
     camera = new BABYLON.ArcRotateCamera('cam', 
-            -Math.PI/2, 1.5,
-            3.2, 
-            new BABYLON.Vector3(0,1.4,2.3), 
-            scene);
+    -Math.PI/2, 1.5,
+    3.2, 
+    new BABYLON.Vector3(0,1.4,2.3), 
+    scene);
     camera.attachControl(canvas,true);
     camera.wheelPrecision = 50;
     camera.lowerRadiusLimit = 1;
@@ -262,14 +262,14 @@ class Ghost {
         })
 
         let speed = 0.0;
-       let t=0.0;
-       let i=0;
+        let t=0.0;
+        let i=0;
 
-       let traguardo = new BABYLON.Vector3(0,0,0);
+        let traguardo = new BABYLON.Vector3(0,0,0);
 
         scene.registerBeforeRender(() =>
         {
-           t+=0.01;
+            t+=0.01;
             macchina.advance(speed);
             // positions storing
             ghostCar.registerCarMovements(speed);
@@ -282,31 +282,33 @@ class Ghost {
         //  }
 
         //dobbiamo prendere la mesh del circuito
-         if(ghostCar.perno.position==traguardo){
-             ghostCar.advanceGhost(positions,i,rotations,speedValuesList);
-              i++;
+        if(ghostCar.perno.position==traguardo){
+            ghostCar.advanceGhost(positions,i,rotations,speedValuesList);
+            i++;
             }
 
-            if(tasti['a'])
-                macchina.perno.rotation.y -= 0.02;
-            else if(tasti['d'])
-                macchina.perno.rotation.y += 0.02;
-
-                if(tasti['w']) {
+        if(tasti['a'])
+            macchina.perno.rotation.y -= 0.02;
+        else {
+            if(tasti['d'])
+                    macchina.perno.rotation.y += 0.02;
+            if(tasti['w']) {
                     // aumento la velocità (fino ad un massimo di 0.1)
-                    speed = Math.min(0.1, speed + 0.001);
-                } else if(tasti['s']) {
-                    // freno, cioè diminuisco la velocità (fino ad un minimo
-                    // di 0)
-                    speed = Math.max(-0.1, speed - 0.001);
-                } else {
-                    // se non faccio nulla la macchina rallenta da sola
-                    if(speed>=0){
-                        speed = Math.max(0.0, speed - 0.0001);
-                        }else {
-                            speed = Math.min(0.0,speed + 0.0001)
-                        }
+                speed = Math.min(0.1, speed + 0.001);
+            } else if(tasti['s']) {
+                // freno, cioè diminuisco la velocità (fino ad un minimo
+                // di 0)
+                speed = Math.max(-0.1, speed - 0.001);
+            } else {
+                // se non faccio nulla la macchina rallenta da sola
+                if(speed>=0){
+                    speed = Math.max(0.0, speed - 0.0001);
+                    }
+                    else {
+                        speed = Math.min(0.0,speed + 0.0001)
+                    }
                 }
+            }
         })
     }
     

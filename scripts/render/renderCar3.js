@@ -31,19 +31,19 @@ function renderCar3(){
         
     
     
-    BABYLON.SceneLoader.Append("./", "../objects/monzatrack.glb", scene3, function (scene3) {
-        var ruote = [];
-        ruote.push(scene.meshes[7]);
-        ruote.push(scene.meshes[8]);
-        ruote.push(scene.meshes[9]);
-        ruote.push(scene.meshes[10]);
+    BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene3, function (scene3) {
+        // var ruote = [];
+        // ruote.push(scene.meshes[7]);
+        // ruote.push(scene.meshes[8]);
+        // ruote.push(scene.meshes[9]);
+        // ruote.push(scene.meshes[10]);
        
         car3 = scene.meshes[0];
 
-        ruote[0].parent =car3;
-        ruote[1].parent =car3;
-        ruote[2].parent =car3;
-        ruote[3].parent =car3;
+        // ruote[0].parent =car3;
+        // ruote[1].parent =car3;
+        // ruote[2].parent =car3;
+        // ruote[3].parent =car3;
 
         
       

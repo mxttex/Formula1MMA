@@ -35,20 +35,20 @@ function renderCar2(){
         
     
     
-    BABYLON.SceneLoader.Append("./", "../objects/ayrton_senna_f1_car_mclaren.glb", scene2, function (scene2) {
+    BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene2, function (scene2) {
         
          car2 = scene.meshes[0];
 
         
-        ruote.push(scene.meshes[7]);
-        ruote.push(scene.meshes[8]);
-        ruote.push(scene.meshes[9]);
-        ruote.push(scene.meshes[10]);
+        // ruote.push(scene.meshes[7]);
+        // ruote.push(scene.meshes[8]);
+        // ruote.push(scene.meshes[9]);
+        // ruote.push(scene.meshes[10]);
 
-        ruote[0].parent =car;
-        ruote[1].parent =car;
-        ruote[2].parent =car;
-        ruote[3].parent =car
+        // ruote[0].parent =car;
+        // ruote[1].parent =car;
+        // ruote[2].parent =car;
+        // ruote[3].parent =car
        
 
 
