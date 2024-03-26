@@ -32,25 +32,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     // // carico il circuito e la macchina scelti dall'utente
     var circuit = localStorage.getItem("CIRCUIT");
-     
-     
+
     // //Bisogna sistemare le dimensioni
 
     switch(circuit){
         case "Circuit1":
+
+
             BABYLON.SceneLoader.ImportMesh("", "../objects/circuito/", "circuito.obj", scene)
+
             break;
         case "Circuit2":
-            BABYLON.SceneLoader.Append("./", "../objects/circuito/circuito.obj", scene, function (scene) {});
+            BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene);
             break;
-        case "Circuit3":
-            BABYLON.SceneLoader.Append("./", "../objects/circuito/circuito.obj", scene, function (scene) {});
-            break;
+        // case "Circuit3":
+        //     BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene)
+        //     break;
         default:
-            BABYLON.SceneLoader.Append("./", "../objects/circuito/circuito.obj", scene, function (scene) {});
+            BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene);
             break;
     }
     
+
     var car = localStorage.getItem("CAR");
 
      switch(car){
@@ -69,6 +72,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
      }
 
 
+
     console.log(scene.meshes)
     
    
@@ -81,7 +85,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // resize event
     window.addEventListener("resize", () => engine.resize());
 
-    scene.clearColor = new BABYLON.Color3(60/255, 139/255, 199/255);
+    scene.clearColor = new BABYLON.Color3(153/255, 204/255, 255/255);
 
 
 });

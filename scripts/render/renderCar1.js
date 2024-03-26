@@ -28,9 +28,9 @@ function renderCar1(){
     light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 0, -4), scene);   
     light2.intensity = 0.5;
     light2.parent = camera;
-   
+    scene.clearColor = new BABYLON.Color3(153/255, 204/255, 255/255);
 
-    BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {
+    BABYLON.SceneLoader.Append("./", "../objects/MACCHINA_1/f1_car1.obj", scene, function (scene) {
         var ruote = [];
         // ruote.push(scene.meshes[7]);
         // ruote.push(scene.meshes[8]);

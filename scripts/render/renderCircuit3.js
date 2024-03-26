@@ -30,7 +30,7 @@ function renderCircuit3(){
     light2.intensity = 0.5;
     light2.parent = camera2;
         
-    
+    scene2.clearColor = new BABYLON.Color3(153/255, 204/255, 255/255);
     
     BABYLON.SceneLoader.Append("./", "../objects/macchina.obj", scene2, function (scene2) {
         
