@@ -12,7 +12,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let texture, light1, light2;
     scene = new BABYLON.Scene(engine);
     camera = new BABYLON.ArcRotateCamera('cam', 
-            -Math.PI/2, 1.5,
+            Math.PI*47/24,
+             1.5,
             20, 
             new BABYLON.Vector3(0,1.4,2.3), 
             scene);
@@ -27,15 +28,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
     light2.intensity = 0.5;
     light2.parent = camera;
         
-    // populateScene(scene);
+     //populateScene(scene);
 
     // // carico il circuito e la macchina scelti dall'utente
     var circuit = localStorage.getItem("CIRCUIT");
-    // var car = localStorage.getItem("CAR");
+     
+     
     // //Bisogna sistemare le dimensioni
+
     switch(circuit){
         case "Circuit1":
-            BABYLON.SceneLoader.Append("./", "../objects/circuito/circuito.obj", scene, function (scene) {});
+            BABYLON.SceneLoader.ImportMesh("", "../objects/circuito/", "circuito.obj", scene, meshesImported)
             break;
         case "Circuit2":
             BABYLON.SceneLoader.Append("./", "../objects/circuito/circuito.obj", scene, function (scene) {});
@@ -48,25 +51,29 @@ window.addEventListener('DOMContentLoaded', (event) => {
             break;
     }
     
-    // switch(car){
-    //     case "Car1":
-    //         BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {});
-    //         break;
-    //     case "Car2":
-    //         BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {});
-    //         break;
-    //     case "Car3":
-    //         BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {});
-    //         break;
-    //     default:
-    //         BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {});
-    //         break;
-    // }
+    var car = localStorage.getItem("CAR");
 
-    BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene, meshesImported)
+     switch(car){
+         case "Car1":
+             BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene, meshesImported)
+             break;
+         case "Car2":
+             BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {});
+             break;
+         case "Car3":
+             BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {});
+             break;
+         default:
+             BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {});
+             break;
+     }
+
 
     console.log(scene.meshes)
     
+   
+    
+
     
     // main loop
     engine.runRenderLoop(()=>scene.render());
@@ -76,17 +83,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     scene.clearColor = new BABYLON.Color3(60/255, 139/255, 199/255);
 
-    
 
-
-    
-    
-    
 });
 
 function meshesImported(meshes){
     const scaleFactor = 0.01;
     meshes.forEach(m => {
         m.scaling.set(scaleFactor, scaleFactor, scaleFactor)
+        camera.parent= m;
+        console.log("Nome della mesh:", m.name);
     })
 }

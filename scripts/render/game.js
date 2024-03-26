@@ -276,10 +276,10 @@ class Ghost {
             //ghost movement
 
         //prova nel caso non avessimo un traguardo 
-        //     if(t>5){
-        //    ghostCar.advanceGhost(positions,i,rotations,speedValuesList);
-        //     i++;
-        //     }
+        //  if(t>5){
+        // ghostCar.advanceGhost(positions,i,rotations,speedValuesList);
+        //  i++;
+        //  }
 
         //dobbiamo prendere la mesh del circuito
         if(ghostCar.perno.position==traguardo){
