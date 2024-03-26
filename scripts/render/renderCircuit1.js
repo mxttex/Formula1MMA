@@ -29,14 +29,10 @@ function renderCircuit1(){
     light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 0, -4), scene);   
     light2.intensity = 0.5;
     light2.parent = camera;
-        
+    scene.clearColor = new BABYLON.Color3(153/255, 204/255, 255/255);  
     
     
-    BABYLON.SceneLoader.Append("./", "../objects/circuito/circuito.obj", scene, function (scene) {
-  
-      
-      
-    });
+    BABYLON.SceneLoader.Append("./", "../objects/circuito1/circuito1.obj", scene, function (scene) {});
 
     
 
