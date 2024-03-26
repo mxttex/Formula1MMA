@@ -1,5 +1,7 @@
 $(document).ready(function(){
     var modalId = $("#modalId");
+    
+    
     $(modalId).on('show.bs.modal',function(event){
         let button= event.relatedTarget;
         let recipient= button.getAttribute('data-bs-whatever')
