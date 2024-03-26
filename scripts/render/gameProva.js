@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     switch(circuit){
         case "Circuit1":
-            BABYLON.SceneLoader.ImportMesh("", "../objects/circuito/", "circuito.obj", scene, meshesImported)
+            BABYLON.SceneLoader.ImportMesh("", "../objects/circuito/", "circuito.obj", scene)
             break;
         case "Circuit2":
             BABYLON.SceneLoader.Append("./", "../objects/circuito/circuito.obj", scene, function (scene) {});
@@ -58,14 +58,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
              BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene, meshesImported)
              break;
          case "Car2":
-             BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {});
-             break;
+            BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene, meshesImported)
+            break;
          case "Car3":
-             BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {});
-             break;
+            BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene, meshesImported)
+            break;
          default:
-             BABYLON.SceneLoader.Append("./", "../objects/macchina1/macchina1.obj", scene, function (scene) {});
-             break;
+            BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene, meshesImported)
+            break;
      }
 
 
