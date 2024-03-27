@@ -1,6 +1,7 @@
 let canvas, engine, camera, obj;
 let scene;
 let pivot;
+var animations;
 
 //ATTUALMENTE SETTATO CON IL CONTENUTO DEL FILE PROVA, IN MODO DA AVERE UN'IDEA GENERALE DI COME SIA IL GIOCO
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -107,23 +108,34 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let speed = 0;
     scene.registerBeforeRender(() =>
         {
+            $("#speed").text(speed*2000)
             
             macchina.advance(speed);
             // registerPositions();
 
             if(tasti['a'])
+            {
                 pivot.rotation.y -= 0.02;
+                animations[4].start();
+            }
             else if(tasti['d'])
+            {
                 pivot.rotation.y += 0.02;
-
+                animations[3].start();
+            }
+            else{
                 if(tasti['w']) {
                     // aumento la velocità (fino ad un massimo di 0.1)
-                    speed = Math.min(0.1, speed + 0.001);
+                     speed = Math.min(0.1, speed + 0.001);
+                    // animations[1].start();
+                     
+
                     // pivot.position.addInPlace(speed);
                 } else if(tasti['s']) {
                     // freno, cioè diminuisco la velocità (fino ad un minimo
                     // di 0)
                     speed = Math.max(-0.1, speed - 0.001);
+                    
                     // pivot.position.addInPlace(speed);
                 } else {
                     // se non faccio nulla la macchina rallenta da sola
@@ -135,14 +147,38 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         }
                 }
 
+            }
+                
                 // let delta = new BABYLON.Vector3(speed*Math.sin(phi), 0, speed*Math.cos(phi));
                 // pivot.position.addInPlace(speed);
+
+                if(speed > 0)
+                {
+                    animations[1].start(true);
+                    animations[1].speedRatio = Math.abs(speed*10)
+                }
+                else if(speed <0){
+                    animations[0].start(true);
+                    animations[0].speedRatio = Math.abs(speed*10);
+                }
+                else{
+                    // animations[1].stop();
+                    // animations[0].stop();
+
+                }
+
         })
 
+        
+        
+        
+        
 
+        
 });
 
-function meshesImported(meshes){
+
+function meshesImported(meshes, animationGroup){
     const scaleFactor = 0.01;
     meshes.forEach(m => {
         m.scaling.set(scaleFactor, scaleFactor, scaleFactor)
@@ -150,6 +186,13 @@ function meshesImported(meshes){
         m.parent = pivot;
         console.log("Nome della mesh:", m.name);
     })
+
+
+    animations = scene.animationGroups
+
+    animations[0].stop();
+
+    
 }
 
 class Macchina 
@@ -157,18 +200,22 @@ class Macchina
     constructor(car){
         switch(car){
             case "Car1":
-                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.obj", scene, meshesImported)
+                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.glb", scene, meshesImported)
                 break;
             case "Car2":
-                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_2/", "f1_car2.obj", scene, meshesImported)
+                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_2/", "f1_car2.glb", scene, meshesImported)
                 break;
             case "Car3":
-                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_3/", "f1_car3.obj", scene, meshesImported)
-               break;
+                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.glb", scene, meshesImported)
+                break;
             default:
-               BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.obj", scene, meshesImported)
-               break;
+                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.lb", scene, meshesImported)
+                break;
         }
+
+        pivot.position.x = 0
+        pivot.position.y = 0
+        pivot.position.z = 0
     }
 
     advance(d) {

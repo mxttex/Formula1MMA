@@ -269,6 +269,7 @@ class Ghost {
 
         scene.registerBeforeRender(() =>
         {
+            $("#speed").val(speed)
             t+=0.01;
             macchina.advance(speed);
             // positions storing
