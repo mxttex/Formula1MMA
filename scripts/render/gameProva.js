@@ -1,5 +1,6 @@
 let canvas, engine, camera, obj;
 let scene;
+let pivot;
 
 //ATTUALMENTE SETTATO CON IL CONTENUTO DEL FILE PROVA, IN MODO DA AVERE UN'IDEA GENERALE DI COME SIA IL GIOCO
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -12,10 +13,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let texture, light1, light2;
     scene = new BABYLON.Scene(engine);
     camera = new BABYLON.ArcRotateCamera('cam', 
-            Math.PI*47/24,
-             1.5,
-            20, 
-            new BABYLON.Vector3(0,1.4,2.3), 
+            Math.PI, Math.PI/3+0.3,
+            0, 
+            new BABYLON.Vector3(-1.5
+                ,3.8,-0), 
             scene);
     camera.attachControl(canvas,true);
     camera.wheelPrecision = 50;
@@ -35,41 +36,45 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     // //Bisogna sistemare le dimensioni
 
+    pivot = new BABYLON.TransformNode('a', scene);
+
     switch(circuit){
         case "Circuit1":
 
 
-            BABYLON.SceneLoader.ImportMesh("", "../objects/circuito/", "circuito.obj", scene)
+            BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito1.obj", scene)
 
             break;
         case "Circuit2":
-            BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene);
+            BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito1.obj", scene);
             break;
         // case "Circuit3":
-        //     BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene)
+        //     BABYLON.SceneLoader.ImportMesh("", "../objects/circuito/", "circuito.obj", scene)
         //     break;
         default:
-            BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene);
+            BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito1.obj", scene);
             break;
     }
     
 
     var car = localStorage.getItem("CAR");
 
-     switch(car){
-         case "Car1":
-             BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene, meshesImported)
-             break;
-         case "Car2":
-            BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene, meshesImported)
-            break;
-         case "Car3":
-            BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene, meshesImported)
-            break;
-         default:
-            BABYLON.SceneLoader.ImportMesh("", "../objects/macchina1/", "macchina1.obj", scene, meshesImported)
-            break;
-     }
+    //  switch(car){
+    //      case "Car1":
+    //          BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.obj", scene, meshesImported)
+    //          break;
+    //      case "Car2":
+    //         BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_2/", "f1_car2.obj", scene, meshesImported)
+    //         break;
+    //      case "Car3":
+    //         BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_3/", "f1_car3.obj", scene, meshesImported)
+    //         break;
+    //      default:
+    //         BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.obj", scene, meshesImported)
+    //         break;
+    //  }
+
+    var macchina = new Macchina(car);
 
 
 
@@ -86,6 +91,53 @@ window.addEventListener('DOMContentLoaded', (event) => {
     window.addEventListener("resize", () => engine.resize());
 
     scene.clearColor = new BABYLON.Color3(153/255, 204/255, 255/255);
+    let tasti = {};
+
+    scene.onKeyboardObservable.add((kbInfo) => {
+        if(kbInfo.type === BABYLON.KeyboardEventTypes.KEYDOWN) //controlla se il tasto è stato premuto o rilasciato
+        {
+            //se è stato premuto
+            tasti[kbInfo.event.key] = true;
+        }
+        else{
+            //se il tasto è stato rilasciato
+            tasti[kbInfo.event.key] = false;
+        }
+    })
+    let speed = 0;
+    scene.registerBeforeRender(() =>
+        {
+            
+            macchina.advance(speed);
+            // registerPositions();
+
+            if(tasti['a'])
+                pivot.rotation.y -= 0.02;
+            else if(tasti['d'])
+                pivot.rotation.y += 0.02;
+
+                if(tasti['w']) {
+                    // aumento la velocità (fino ad un massimo di 0.1)
+                    speed = Math.min(0.1, speed + 0.001);
+                    // pivot.position.addInPlace(speed);
+                } else if(tasti['s']) {
+                    // freno, cioè diminuisco la velocità (fino ad un minimo
+                    // di 0)
+                    speed = Math.max(-0.1, speed - 0.001);
+                    // pivot.position.addInPlace(speed);
+                } else {
+                    // se non faccio nulla la macchina rallenta da sola
+                    if(speed>=0){
+                        speed = Math.max(0.0, speed - 0.0001);
+                        }else {
+                            speed = Math.min(0.0,speed + 0.0001)
+                            // pivot.position.addInPlace(speed);
+                        }
+                }
+
+                // let delta = new BABYLON.Vector3(speed*Math.sin(phi), 0, speed*Math.cos(phi));
+                // pivot.position.addInPlace(speed);
+        })
 
 
 });
@@ -95,6 +147,36 @@ function meshesImported(meshes){
     meshes.forEach(m => {
         m.scaling.set(scaleFactor, scaleFactor, scaleFactor)
         camera.parent= m;
+        m.parent = pivot;
         console.log("Nome della mesh:", m.name);
     })
+}
+
+class Macchina 
+{
+    constructor(car){
+        switch(car){
+            case "Car1":
+                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.obj", scene, meshesImported)
+                break;
+            case "Car2":
+                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_2/", "f1_car2.obj", scene, meshesImported)
+                break;
+            case "Car3":
+                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_3/", "f1_car3.obj", scene, meshesImported)
+               break;
+            default:
+               BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.obj", scene, meshesImported)
+               break;
+        }
+    }
+
+    advance(d) {
+        let phi = pivot.rotation.y;
+        // delta è il vettore spostamento
+        let delta = new BABYLON.Vector3(d*Math.sin(phi), 0, d*Math.cos(phi));
+        pivot.position.addInPlace(delta);
+        this.distanza_percorsa += d;
+    }
+    
 }
