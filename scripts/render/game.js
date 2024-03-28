@@ -113,7 +113,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     
     scene.registerBeforeRender(() =>
         {
-            // $("#speed").text(speed*2000)
+            $("#speed").text(speed*2000)
             let t = performance.now()*0.1;
             
            
@@ -201,6 +201,7 @@ function meshesImported(meshes, animationGroup){
 
     
 }
+
 function stopWatch() {
     let timer = true;
     if (timer) {
@@ -235,7 +236,7 @@ function stopWatch() {
         if (count < 10) {
             countString = "0" + countString;
         }
-        $("#speed").text(hourString+" : "+minuteString+" : "+secondString+" : "+countString);
+        $("#timer").text(hourString+" : "+minuteString+" : "+secondString+" : "+countString);
         
         setTimeout(stopWatch, 10);
     }
