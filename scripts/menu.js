@@ -7,7 +7,7 @@ $().ready(function(){
 $(".buttonCar").click(function(){
    var num = $(this).attr("id");
    localStorage.setItem("CAR",num);
-   location.href = "../pages/circuitchoice.html";
+   location.href = "../pages/game.html";
    
 });
 $(".buttonCircuit").click(function(){

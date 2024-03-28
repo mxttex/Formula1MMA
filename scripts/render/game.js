@@ -1,6 +1,10 @@
 let canvas, engine, camera, obj;
 let scene;
 let pivot;
+let hour = 0;
+let minute = 0;
+let second = 0;
+let count = 0;
 var animations;
 
 //ATTUALMENTE SETTATO CON IL CONTENUTO DEL FILE PROVA, IN MODO DA AVERE UN'IDEA GENERALE DI COME SIA IL GIOCO
@@ -77,7 +81,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     var macchina = new Macchina(car);
 
-
+    stopWatch();
 
     console.log(scene.meshes)
     
@@ -106,10 +110,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     })
     let speed = 0;
+    
     scene.registerBeforeRender(() =>
         {
             $("#speed").text(speed*2000)
+            let t = performance.now()*0.1;
             
+           
             macchina.advance(speed/50);
             // registerPositions();
 
@@ -152,6 +159,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                 if(speed > 0)
                 {
+                    
                     animations[1].start(true);
                     animations[1].speedRatio = Math.abs(speed*10)
                 }
@@ -194,6 +202,46 @@ function meshesImported(meshes, animationGroup){
     
 }
 
+function stopWatch() {
+    let timer = true;
+    if (timer) {
+        count++;
+        if (count == 100) {
+            second++;
+            count = 0;
+        }
+        if (second == 60) {
+            minute++;
+            second = 0;
+        }
+        if (minute == 60) {
+            hour++;
+            minute = 0;
+            second = 0;
+        }
+        let hourString = hour;
+        let minuteString = minute;
+        let secondString = second;
+        let countString = count;
+        if (hour < 10) {
+            hourString = "0" + hourString;
+        }
+        if (minute < 10) {
+            minuteString = "0" + minuteString;
+        }
+        if (second < 10) {
+            secondString = "0" + secondString;
+        }
+  
+        if (count < 10) {
+            countString = "0" + countString;
+        }
+        $("#timer").text(hourString+" : "+minuteString+" : "+secondString+" : "+countString);
+        
+        setTimeout(stopWatch, 10);
+    }
+}
+
 class Macchina 
 {
     constructor(car){
@@ -205,7 +253,7 @@ class Macchina
                 BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_2/", "f1_car2.glb", scene, meshesImported)
                 break;
             case "Car3":
-                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.glb", scene, meshesImported)
+                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_3/", "f1_car3.glb", scene, meshesImported)
                 break;
             default:
                 BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.glb", scene, meshesImported)
