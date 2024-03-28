@@ -13,7 +13,7 @@ function renderCar1(){
     camera = new BABYLON.ArcRotateCamera("Camera", 
         Math.PI/2, 
         Math.PI/3, 
-        50, new BABYLON.Vector3(0,0,0), scene);
+        25, new BABYLON.Vector3(0,0,0), scene);
     camera.wheelPrecision = 40;
     camera.lowerRadiusLimit = 5;
     camera.attachControl(canvas, true);
@@ -30,29 +30,19 @@ function renderCar1(){
     light2.parent = camera;
     scene.clearColor = new BABYLON.Color3(153/255, 204/255, 255/255);
 
-    BABYLON.SceneLoader.Append("./", "../objects/MACCHINA_1/f1_car1.obj", scene, function (scene) {
-        var ruote = [];
-        // ruote.push(scene.meshes[7]);
-        // ruote.push(scene.meshes[8]);
-        // ruote.push(scene.meshes[9]);
-        // ruote.push(scene.meshes[10]);
-       
-        car1 = scene.meshes[0];
-        car1.position.y= Math.PI/2;
+    BABYLON.SceneLoader.Append("./", "../objects/MACCHINA_1/f1_car1.glb", scene, function (scene) {
+        var model = scene.meshes[0]
 
-        // ruote[0].parent =car1;
-        // ruote[1].parent =car1;
-        // ruote[2].parent =car1;
-        // ruote[3].parent =car1;
+        var backward = scene.animationGroups.find(a => a.name === "backward.002")
+        var forward = scene.animationGroups.find(a => a.name === "forward.002")
+        var right = scene.animationGroups.find(a => a.name === "steeringRight")
+        var left = scene.animationGroups.find(a => a.name === "steeringLeft.002")
+        let idle = scene.animationGroups.find(a => a.name === "idle")
 
-        
+        //console.log(scene.animationGroups)
 
-      
-       
-      
-
-
-    });
+        idle.start(true)
+     });
             
 	engine.runRenderLoop(() => scene.render());
 

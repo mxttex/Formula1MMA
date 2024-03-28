@@ -152,6 +152,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                 if(speed > 0)
                 {
+                    
                     animations[1].start(true);
                     animations[1].speedRatio = Math.abs(speed*10)
                 }
@@ -205,7 +206,7 @@ class Macchina
                 BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_2/", "f1_car2.glb", scene, meshesImported)
                 break;
             case "Car3":
-                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.glb", scene, meshesImported)
+                BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_3/", "f1_car3.glb", scene, meshesImported)
                 break;
             default:
                 BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.glb", scene, meshesImported)
