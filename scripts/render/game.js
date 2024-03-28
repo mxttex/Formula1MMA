@@ -23,18 +23,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             new BABYLON.Vector3(-1.5
                 ,3.8,-0), 
             scene);
-    // camera.attachControl(canvas,true);
     camera.wheelPrecision = 50;
     camera.lowerRadiusLimit = 1;
     camera.upperRadiusLimit = 13*2;          
 
     light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(5, 1, 0), scene);
     light1.intensity = 0.5;
-    // light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 0, -4), scene);   
-    // light2.intensity = 0.5;
-    // light2.parent = camera;
+
         
-     //populateScene(scene);
 
     // // carico il circuito e la macchina scelti dall'utente
     var circuit = localStorage.getItem("CIRCUIT");
@@ -63,21 +59,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     
 
     var car = localStorage.getItem("CAR");
-
-    //  switch(car){
-    //      case "Car1":
-    //          BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.obj", scene, meshesImported)
-    //          break;
-    //      case "Car2":
-    //         BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_2/", "f1_car2.obj", scene, meshesImported)
-    //         break;
-    //      case "Car3":
-    //         BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_3/", "f1_car3.obj", scene, meshesImported)
-    //         break;
-    //      default:
-    //         BABYLON.SceneLoader.ImportMesh("", "../objects/MACCHINA_1/", "f1_car1.obj", scene, meshesImported)
-    //         break;
-    //  }
 
     var macchina = new Macchina(car);
 
@@ -148,31 +129,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         speed = Math.max(0.0, speed - 0.0001);
                         }else {
                             speed = Math.min(0.0,speed + 0.0001)
-                            // pivot.position.addInPlace(speed);
                         }
                 }
 
             }
-                
-                // let delta = new BABYLON.Vector3(speed*Math.sin(phi), 0, speed*Math.cos(phi));
-                // pivot.position.addInPlace(speed);
-
+      
                 if(speed > 0)
                 {
-                    
+                    animations[0].stop();
                     animations[1].start(true);
                     animations[1].speedRatio = Math.abs(speed*10)
                 }
                 else if(speed <0){
+		    animations[1].stop();
                     animations[0].start(true);
                     animations[0].speedRatio = Math.abs(speed*10);
                 }
-                else{
-                    // animations[1].stop();
-                    // animations[0].stop();
-
-                }
-
         })
 
         
