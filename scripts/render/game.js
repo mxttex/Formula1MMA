@@ -26,23 +26,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     pivot = new BABYLON.TransformNode('a', scene);
 
-    switch(circuit){
-        case "Circuit1":
+    // switch(circuit){
+    //     case "Circuit1":
 
 
-            BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito1.obj", scene)
+    //         BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito1.obj", scene)
 
-            break;
-        case "Circuit2":
-            BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuit2.glb", scene);
-            break;
-        // case "Circuit3":
-        //     BABYLON.SceneLoader.ImportMesh("", "../objects/circuito/", "circuito.obj", scene)
-        //     break;
-        default:
-            BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuit2.glb", scene);
-            break;
-    }
+    //         break;
+    //     case "Circuit2":
+    //         BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuit2.glb", scene);
+    //         break;
+    //     // case "Circuit3":
+    //     //     BABYLON.SceneLoader.ImportMesh("", "../objects/circuito/", "circuito.obj", scene)
+    //     //     break;
+    //     default:
+    //         BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuit2.glb", scene);
+    //         break;
+    // }
+
+    BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito2_modificato.glb", scene)
     
     
     var car = localStorage.getItem("CAR");
