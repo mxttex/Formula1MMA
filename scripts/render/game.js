@@ -6,6 +6,7 @@ let minute = 0;
 let second = 0;
 let count = 0;
 var animations;
+var cameras = [];
 
 //ATTUALMENTE SETTATO CON IL CONTENUTO DEL FILE PROVA, IN MODO DA AVERE UN'IDEA GENERALE DI COME SIA IL GIOCO
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -15,14 +16,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
 	camera;
 
     
-    let texture, light1, light2;
+    let light1;
     scene = new BABYLON.Scene(engine);
-    camera = new BABYLON.ArcRotateCamera('cam', 
-            Math.PI, Math.PI/3+0.3,
-            0, 
-            new BABYLON.Vector3(-1.5
-                ,3.8,-0), 
-            scene);
+
+    CreaCamere(scene);
+
+    // camera = cameras[1];
+    console.log(cameras)
+    camera = new BABYLON.ArcRotateCamera();
+    camera = cameras[0]
     camera.wheelPrecision = 50;
     camera.lowerRadiusLimit = 1;
     camera.upperRadiusLimit = 13*2;          
@@ -133,18 +135,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 }
 
             }
+
+            if(tasti['c']){
+                camera = cameras[0];
+                
+            }
+            else if(tasti['v'])
+            {
+                camera = cameras[1];
+            }
       
-                if(speed > 0)
-                {
-                    animations[0].stop();
-                    animations[1].start(true);
-                    animations[1].speedRatio = Math.abs(speed*10)
-                }
-                else if(speed <0){
-		    animations[1].stop();
-                    animations[0].start(true);
-                    animations[0].speedRatio = Math.abs(speed*10);
-                }
+            if(speed > 0)
+            {
+                animations[0].stop();
+                animations[1].start(true);
+                animations[1].speedRatio = Math.abs(speed*10)
+            }
+            else if(speed <0){
+		        animations[1].stop();
+                animations[0].start(true);
+                animations[0].speedRatio = Math.abs(speed*10);
+            }
         })
 
         
@@ -246,4 +257,21 @@ class Macchina
         this.distanza_percorsa += d;
     }
     
+}
+
+function CreaCamere(scene){
+    let camera1 = new BABYLON.ArcRotateCamera('cam', 
+        Math.PI, Math.PI/3+0.3,0, 
+        new BABYLON.Vector3(-1.5,3.8,0), 
+        scene);
+
+    
+
+    let camera2 = new BABYLON.ArcRotateCamera('cam1', 
+        Math.PI, Math.PI/3+0.3,3, 
+        new BABYLON.Vector3(-1.5,3.8,0), 
+        scene);
+    
+    cameras.push(camera1);
+    cameras.push(camera2);
 }
