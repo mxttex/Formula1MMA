@@ -7,6 +7,7 @@ let second = 0;
 let count = 0;
 var animations;
 var cameras = [];
+var nrCamere = 0;
 
 //ATTUALMENTE SETTATO CON IL CONTENUTO DEL FILE PROVA, IN MODO DA AVERE UN'IDEA GENERALE DI COME SIA IL GIOCO
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -18,23 +19,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     
     let light1;
     scene = new BABYLON.Scene(engine);
-
-    CreaCamere(scene);
-
-    // camera = cameras[1];
-    console.log(cameras)
-    camera = new BABYLON.ArcRotateCamera();
-    camera = cameras[0]
-    camera.wheelPrecision = 50;
-    camera.lowerRadiusLimit = 1;
-    camera.upperRadiusLimit = 13*2;          
-
-    light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(5, 1, 0), scene);
-    light1.intensity = 0.5;
-
-        
-
-    // // carico il circuito e la macchina scelti dall'utente
+    // carico il circuito e la macchina scelti dall'utente
     var circuit = localStorage.getItem("CIRCUIT");
 
     // //Bisogna sistemare le dimensioni
@@ -59,10 +44,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
             break;
     }
     
-
+    
     var car = localStorage.getItem("CAR");
 
     var macchina = new Macchina(car);
+    CreaCamere(scene);
+
+    // camera = cameras[1];
+    console.log(cameras)
+    camera = new BABYLON.ArcRotateCamera();
+    camera = cameras[nrCamere]
+    camera.wheelPrecision = 50;
+    camera.lowerRadiusLimit = 1;
+    camera.upperRadiusLimit = 13*2;          
+
+    light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(5, 1, 0), scene);
+    light1.intensity = 0.5;
+
+        
+
+   
+
 
     stopWatch();
 
@@ -136,15 +138,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             }
 
-            if(tasti['c']){
-                camera = cameras[0];
-                
-            }
-            else if(tasti['v'])
-            {
-                camera = cameras[1];
-            }
-      
+            if(tasti['1'])
+                scene.activeCamera = cameras[0];
+            else if(tasti['2'])
+                scene.activeCamera = cameras[1];
+            else if(tasti['3'])
+                scene.activeCamera = cameras[2];
+            else if(tasti['4'])
+                scene.activeCamera = cameras[3];
+            
+
+
             if(speed > 0)
             {
                 animations[0].stop();
@@ -171,7 +175,11 @@ function meshesImported(meshes, animationGroup){
     const scaleFactor = 0.001;
     meshes.forEach(m => {
         m.scaling.set(scaleFactor, scaleFactor, scaleFactor)
-        camera.parent= m;
+        
+        for(let i=0; i<cameras.length; i++){
+            cameras[i].parent = m;
+        }
+
         m.parent = pivot;
         m.rotation = new BABYLON.Vector3(0, -Math.PI/2, 0)
         console.log("Nome della mesh:", m.name);
@@ -272,6 +280,18 @@ function CreaCamere(scene){
         new BABYLON.Vector3(-1.5,3.8,0), 
         scene);
     
+    let camera3 = new BABYLON.ArcRotateCamera('cam2',
+        Math.PI, Math.PI/3+0.3,3, 
+        new BABYLON.Vector3(-1.5,3.8,1), 
+        scene);
+
+    let camera4 = new BABYLON.ArcRotateCamera('cam3', Math.PI, Math.PI/3+0.3,17, 
+    new BABYLON.Vector3(-1.5,3.8,0), 
+    scene)
+
     cameras.push(camera1);
     cameras.push(camera2);
+    cameras.push(camera3);
+    cameras.push(camera4);
 }
+
