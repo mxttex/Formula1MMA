@@ -26,24 +26,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     pivot = new BABYLON.TransformNode('a', scene);
 
-    // switch(circuit){
-    //     case "Circuit1":
-
-
-    //         BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito1.obj", scene)
-
-    //         break;
-    //     case "Circuit2":
-    //         BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuit2.glb", scene);
-    //         break;
-    //     // case "Circuit3":
-    //     //     BABYLON.SceneLoader.ImportMesh("", "../objects/circuito/", "circuito.obj", scene)
-    //     //     break;
-    //     default:
-    //         BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuit2.glb", scene);
-    //         break;
-    // }
-
     BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito2_modificato.glb", scene)
 
     
@@ -67,14 +49,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
     light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(5, 1, 0), scene);
     light1.intensity = 0.5;
 
-        
-
+    let wall = BABYLON.MeshBuilder.CreateBox("wall", {width:0.5,height:0.177,depth:0.003}, scene); 
+    wall.material = new BABYLON.StandardMaterial('wallmat', scene);
+    wall.material.diffuseColor.set(0.9,0.1,0.1);
+    wall.position.x = -2.782626152038574
+    wall.position.y = 0.001
+    wall.position.z = 1.2650659084320068
    
 
 
     stopWatch();
 
-    console.log(scene.meshes)
+    console.log(wall)
     
    
     
