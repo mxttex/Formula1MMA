@@ -8,6 +8,7 @@ let count = 0;
 var animations;
 var cameras = [];
 var nrCamere = 0;
+let wall, carBox;
 
 //ATTUALMENTE SETTATO CON IL CONTENUTO DEL FILE PROVA, IN MODO DA AVERE UN'IDEA GENERALE DI COME SIA IL GIOCO
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -49,13 +50,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
     light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(5, 1, 0), scene);
     light1.intensity = 0.5;
 
-    let wall = BABYLON.MeshBuilder.CreateBox("wall", {width:0.5,height:0.177,depth:0.003}, scene); 
+    wall = BABYLON.MeshBuilder.CreateBox("wall", {width:0.1,height:0.177,depth:0.05}, scene); 
     wall.material = new BABYLON.StandardMaterial('wallmat', scene);
     wall.material.diffuseColor.set(0.9,0.1,0.1);
-    wall.position.x = -2.782626152038574
+    wall.position.x = -2.88
     wall.position.y = 0.001
-    wall.position.z = 1.2650659084320068
+    wall.position.z = 1.233
+    wall.rotation.y =1
+   // wall.visibility =0;
+    wall.checkCollisions = true;
+
+
+    carBox = BABYLON.MeshBuilder.CreateBox("wall", {width:0.06,height:0.177,depth:0.05}, scene); 
    
+    carBox.checkCollisions = true;
+  
+   
+
 
 
     stopWatch();
@@ -92,7 +103,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
         {
             let t = performance.now()*0.1;
         $("#round").text(round+" \\ 3")
-           
+           carBox.position = pivot.position;
+          // console.log(wall.intersectsMesh(carBox,true))
             macchina.advance(speed/50);
             // registerPositions();
 
@@ -185,7 +197,7 @@ function meshesImported(meshes, animationGroup){
 }
 
 function stopWatch() {
-    let timer = true;
+    let timer = false;
     if (timer) {
         count++;
         if (count == 100) {
