@@ -67,7 +67,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalTitleId">REGOLE</h5>
+                            <h5 class="modal-title" id="modalTitleId" style="color: rgb(0, 85, 141);">REGOLE</h5>
                             
                             <button
                                 type="button"
@@ -78,7 +78,11 @@
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
-                                <div class="row">
+                                <div class="row" style="color: rgb(10, 128, 206);">
+                                    OBIETTIVO:
+                                </div>
+                                <div class="row">completa il giro della pista nel minor tempo possibile</div>
+                                <div class="row" style="color: rgb(10, 128, 206);">
                                     COMANDI:
                                 </div>
                                 <div class="row">-w per accelerare</div>
@@ -126,12 +130,6 @@
         <script src="../scripts/gamePage.js"></script>
         <script src="../scripts/common.js"></script>
 
-        <script>
-            $().ready(function(){
-                $("#gameCanvas").trigger('focus');
-                
-            });
-           
-        </script>
+        
     </body>
 </html>
