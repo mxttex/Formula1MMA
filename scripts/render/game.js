@@ -1,17 +1,19 @@
 let canvas, engine, camera, obj;
 let scene;
 let pivot;
-let round = -1;
+let round = -2;
 var animations;
 var cameras = [];
 var nrCamere = 0;
-let wall, carBox;
 let timer = false;
 let minuteString, secondString, countString;
 let entrato = false;
 let minute = 0;
 let second = 0;
 let count = 0;
+let wall, carBox,cunetta;
+let dist;
+let bordi;
 
 //ATTUALMENTE SETTATO CON IL CONTENUTO DEL FILE PROVA, IN MODO DA AVERE UN'IDEA GENERALE DI COME SIA IL GIOCO
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -19,7 +21,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     canvas = document.getElementById("gameCanvas"); // Get the canvas element
     engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 	camera;
-
+    $("#rulesButton").trigger("click");
+    $("#gameCanvas").trigger('focus');
     
     let light1;
     scene = new BABYLON.Scene(engine);
@@ -30,10 +33,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     pivot = new BABYLON.TransformNode('a', scene);
 
-    BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito2_modificato.glb", scene)
-
-    
-    console.log(scene.meshes)
+    BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito2_modificato.glb", scene,function(meshes){
+        bordi = meshes[30]
+        bordi.checkCollisions = true;
+        meshes[146].visibility = 0;
+       
+    })
     
     var car = localStorage.getItem("CAR");
 
@@ -43,7 +48,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     CreaCamere(scene);
 
     // camera = cameras[1];
-    console.log(cameras)
     camera = new BABYLON.ArcRotateCamera();
     camera = cameras[nrCamere]
     camera.wheelPrecision = 50;
@@ -66,6 +70,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     carBox = BABYLON.MeshBuilder.CreateBox("wall", {width:0.06,height:0.177,depth:0.05}, scene); 
     carBox.checkCollisions = true;
+
+    cunetta = BABYLON.MeshBuilder.CreateBox("cunetta", {width:0.01,height:0.005,depth:0.4}, scene); 
+    cunetta.position.x = -3.21
+    cunetta.position.y = 0.001
+    cunetta.position.z = -1.25
     // main loop
     engine.runRenderLoop(()=>scene.render());
 
@@ -91,11 +100,37 @@ window.addEventListener('DOMContentLoaded', (event) => {
     scene.registerBeforeRender(() =>
         {
             StoppaCronometro();
+            if(round == 1)
+            {
+                localStorage.setItem("t1", (minuteString + ":" + secondString +":" + countString))
+                location.href = "../pages/win.html";
+            }
             let t = performance.now()*0.1;
-        $("#round").text(round+" \\ 3")
+            $("#round").text((round == -1? "0":round )+" \\ 1")
             carBox.position = pivot.position;
           // console.log(wall.intersectsMesh(carBox,true))
             macchina.advance(speed/50);
+
+            let prevDist = dist;
+            dist = BABYLON.Vector3.Distance(cunetta.position,carBox.position);
+            if(dist < 0.2)
+            {
+                if(prevDist > dist)
+                {
+                    pivot.position.y += 0.0001
+                }
+                else{
+                    pivot.position.y -= 0.0001
+                }
+               
+
+            }
+            else{
+                if(pivot.position.y > 0.001)
+                {
+                    pivot.position.y -= 0.0001
+                }
+            }
             // registerPositions();
 
             if(tasti['a'])
@@ -158,11 +193,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         
         
         
-        if(round === 3){
-            alert("good game!!!!")
-
-        }
-
+        
         
 });
 
@@ -178,7 +209,6 @@ function meshesImported(meshes, animationGroup){
 
         m.parent = pivot;
         m.rotation = new BABYLON.Vector3(0, -Math.PI/2, 0)
-        console.log("Nome della mesh:", m.name);
     })
 
 
@@ -300,14 +330,11 @@ function StoppaCronometro(){
         if(!entrato)
         {
             timer = false;
-            if(round != 0)
-            {
-                let s = "t"+round
-                localStorage.setItem(s, (minuteString + ":" + secondString +":" + countString))
-            }
+          
         // $(".table").append(minuteString + ":" + secondString +":" + countString)
             entrato = true;
             round++;
+            console.log(round)
         }
         
     }
@@ -315,9 +342,9 @@ function StoppaCronometro(){
     {
         if(entrato)
         {
+            console.log(localStorage)
             timer = true;
             stopWatch();
-            console.log(localStorage)
         }
         entrato = false;
         // stopWatch();
