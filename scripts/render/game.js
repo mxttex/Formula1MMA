@@ -158,9 +158,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         
         
         
-        if(round == 3){
+        if(round === 3){
             alert("good game!!!!")
-            
+
         }
 
         
@@ -204,9 +204,9 @@ function stopWatch() {
             minute = 0;
             second = 0;
         }
-        let minuteString = minute;
-        let secondString = second;
-        let countString = count;
+        minuteString = minute;
+        secondString = second;
+        countString = count;
         
         if (minute < 10) {
             minuteString = "0" + minuteString;
@@ -300,6 +300,11 @@ function StoppaCronometro(){
         if(!entrato)
         {
             timer = false;
+            if(round != 0)
+            {
+                let s = "t"+round
+                localStorage.setItem(s, (minuteString + ":" + secondString +":" + countString))
+            }
         // $(".table").append(minuteString + ":" + secondString +":" + countString)
             entrato = true;
             round++;
@@ -312,6 +317,7 @@ function StoppaCronometro(){
         {
             timer = true;
             stopWatch();
+            console.log(localStorage)
         }
         entrato = false;
         // stopWatch();
