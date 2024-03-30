@@ -1,14 +1,17 @@
 let canvas, engine, camera, obj;
 let scene;
 let pivot;
-let round = 0;
-let minute = 0;
-let second = 0;
-let count = 0;
+let round = -1;
 var animations;
 var cameras = [];
 var nrCamere = 0;
 let wall, carBox;
+let timer = false;
+let minuteString, secondString, countString;
+let entrato = false;
+let minute = 0;
+let second = 0;
+let count = 0;
 
 //ATTUALMENTE SETTATO CON IL CONTENUTO DEL FILE PROVA, IN MODO DA AVERE UN'IDEA GENERALE DI COME SIA IL GIOCO
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -57,26 +60,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     wall.position.y = 0.001
     wall.position.z = 1.233
     wall.rotation.y =1
-   // wall.visibility =0;
+    wall.visibility =0;
     wall.checkCollisions = true;
 
 
     carBox = BABYLON.MeshBuilder.CreateBox("wall", {width:0.06,height:0.177,depth:0.05}, scene); 
-   
     carBox.checkCollisions = true;
-  
-   
-
-
-
-    stopWatch();
-
-    console.log(wall)
-    
-   
-    
-
-    
     // main loop
     engine.runRenderLoop(()=>scene.render());
 
@@ -101,9 +90,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     
     scene.registerBeforeRender(() =>
         {
+            StoppaCronometro();
             let t = performance.now()*0.1;
         $("#round").text(round+" \\ 3")
-           carBox.position = pivot.position;
+            carBox.position = pivot.position;
           // console.log(wall.intersectsMesh(carBox,true))
             macchina.advance(speed/50);
             // registerPositions();
@@ -168,7 +158,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
         
         
         
-        
+        if(round == 3){
+            alert("good game!!!!")
+            
+        }
 
         
 });
@@ -195,9 +188,8 @@ function meshesImported(meshes, animationGroup){
 
     
 }
-
 function stopWatch() {
-    let timer = false;
+
     if (timer) {
         count++;
         if (count == 100) {
@@ -209,7 +201,6 @@ function stopWatch() {
             second = 0;
         }
         if (minute == 60) {
-          
             minute = 0;
             second = 0;
         }
@@ -223,7 +214,6 @@ function stopWatch() {
         if (second < 10) {
             secondString = "0" + secondString;
         }
-  
         if (count < 10) {
             countString = "0" + countString;
         }
@@ -231,6 +221,11 @@ function stopWatch() {
         
         setTimeout(stopWatch, 10);
     }
+    else{
+        count = second = minute = 0;
+    }
+    
+    
 }
 
 class Macchina 
@@ -296,3 +291,30 @@ function CreaCamere(scene){
     cameras.push(camera4);
 }
 
+function StoppaCronometro(){
+
+    // console.log(wall.intersectsMesh(carBox,true))
+    
+    if(wall.intersectsMesh(carBox,true))
+    {
+        if(!entrato)
+        {
+            timer = false;
+        // $(".table").append(minuteString + ":" + secondString +":" + countString)
+            entrato = true;
+            round++;
+        }
+        
+    }
+    else
+    {
+        if(entrato)
+        {
+            timer = true;
+            stopWatch();
+        }
+        entrato = false;
+        // stopWatch();
+    }
+    
+}
