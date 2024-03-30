@@ -1,7 +1,7 @@
 let canvas, engine, camera, obj;
 let scene;
 let pivot;
-let hour = 0;
+let round = 0;
 let minute = 0;
 let second = 0;
 let count = 0;
@@ -26,28 +26,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     pivot = new BABYLON.TransformNode('a', scene);
 
-    // switch(circuit){
-    //     case "Circuit1":
-
-
-    //         BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito1.obj", scene)
-
-    //         break;
-    //     case "Circuit2":
-    //         BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuit2.glb", scene);
-    //         break;
-    //     // case "Circuit3":
-    //     //     BABYLON.SceneLoader.ImportMesh("", "../objects/circuito/", "circuito.obj", scene)
-    //     //     break;
-    //     default:
-    //         BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuit2.glb", scene);
-    //         break;
-    // }
-
     BABYLON.SceneLoader.ImportMesh("", "../objects/circuito1/", "circuito2_modificato.glb", scene)
+
     
+    console.log(scene.meshes)
     
     var car = localStorage.getItem("CAR");
+
+   
 
     var macchina = new Macchina(car);
     CreaCamere(scene);
@@ -63,14 +49,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
     light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(5, 1, 0), scene);
     light1.intensity = 0.5;
 
-        
-
+    let wall = BABYLON.MeshBuilder.CreateBox("wall", {width:0.5,height:0.177,depth:0.003}, scene); 
+    wall.material = new BABYLON.StandardMaterial('wallmat', scene);
+    wall.material.diffuseColor.set(0.9,0.1,0.1);
+    wall.position.x = -2.782626152038574
+    wall.position.y = 0.001
+    wall.position.z = 1.2650659084320068
    
 
 
     stopWatch();
 
-    console.log(scene.meshes)
+    console.log(wall)
     
    
     
@@ -100,9 +90,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     
     scene.registerBeforeRender(() =>
         {
-            $("#speed").text(speed*2000)
             let t = performance.now()*0.1;
-            
+        $("#round").text(round+" \\ 3")
            
             macchina.advance(speed/50);
             // registerPositions();
@@ -208,17 +197,14 @@ function stopWatch() {
             second = 0;
         }
         if (minute == 60) {
-            hour++;
+          
             minute = 0;
             second = 0;
         }
-        let hourString = hour;
         let minuteString = minute;
         let secondString = second;
         let countString = count;
-        if (hour < 10) {
-            hourString = "0" + hourString;
-        }
+        
         if (minute < 10) {
             minuteString = "0" + minuteString;
         }
@@ -229,7 +215,7 @@ function stopWatch() {
         if (count < 10) {
             countString = "0" + countString;
         }
-        $("#timer").text(hourString+" : "+minuteString+" : "+secondString+" : "+countString);
+        $("#timer").text(minuteString+" : "+secondString+" : "+countString);
         
         setTimeout(stopWatch, 10);
     }
@@ -253,15 +239,16 @@ class Macchina
                 break;
         }
 
-        pivot.position.x = 0.3974527082647077
+        pivot.position.x = -2.782626152038574
         pivot.position.y = 0.001
-        pivot.position.z = 1.4359542108900896
-        this.advance(-0.1)
+        pivot.position.z = 1.2650659084320068
+        pivot.rotation.y = 4.53
+        this.advance(0)
     }
 
     advance(d) {
         let phi = pivot.rotation.y;
-        // delta è il vettore spostamento
+        // delta è il vettore spostamentowwww
         let delta = new BABYLON.Vector3(d*Math.sin(phi), 0, d*Math.cos(phi));
         pivot.position.addInPlace(delta);
         this.distanza_percorsa += d;
